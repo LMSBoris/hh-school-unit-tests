@@ -1,0 +1,16 @@
+name: Build with dependencies
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout public-pom
+        uses: actions/checkout@v4
+        with:
+          repository: hhru/public-pom
+          ref: 1.55.0
+          path: .dependencies/public-pom
+      - name: Checkout project
+        uses: actions/checkout@v4
+      - name: Resolve project dependencies
+        run: mvn dependency:resolve --file pom.xml
